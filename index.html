@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BRIG-ML</title>
+</head>
+<style>
+    @font-face {
+        font-family: "Hubballi";
+        src: url("https://fonts.gstatic.com/s/hubballi/v3/o-0JIpUj3WIZ1RFN55B8whE.woff2");
+    }
+    body{
+        margin: 0;
+        padding: 0;
+        background-color: #222325;
+        font-family: "Hubballi";
+    }
+    .main-img{
+        display: inline-flex;
+        width: 560px;
+        height: 560px;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 11px 8px rgb(0 0 0);
+        -webkit-box-shadow: 0px 0px 11px 8px rgb(0 0 0);
+        vertical-align: middle;
+    }
+    #main-text{
+        color: white;
+        margin-left: 32px;
+        vertical-align: middle;
+    }
+    #randImg{
+        border-radius: 16px;
+        box-shadow: 0px 0px 11px 8px rgb(0 0 0 / 20%);
+        -webkit-box-shadow: 0px 0px 11px 8px rgb(0 0 0 / 20%);
+    }
+    .title{
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 6%;
+        margin-left: 5vw;
+    }
+    .explain{
+        margin-left: 96px;
+        color: white;
+        max-width: 800px;
+        max-height: 500px;
+        font-size: 1.2em;
+    }
+    #group-img{
+        display: flex;
+        width: 90vw;
+        height: 128px;
+        margin-top: 6%;
+        margin-left: 5vw;
+        align-items: center;
+        justify-content: center;
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0px 0px 11px 8px rgb(0 0 0);
+        -webkit-box-shadow: 0px 0px 11px 8px rgb(0 0 0);
+    }
+    .manyImg{
+        width: 120px;
+        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: 0px 0px 11px 8px rgb(0 0 0 / 10%);
+        -webkit-box-shadow: 0px 0px 11px 8px rgb(0 0 0 / 10%);
+    }
+</style>
+<body>
+    <div class="title">
+        <div class="main-img" id="main-img"></div>
+        <h2 id="main-text"></h2>
+        <div class="explain">
+            <h1 id="zusammenfassung">Überblick:</h1>
+            <p>In meinem Projekt geht es um komplett zufällige Bildcollagen von 3D-Werkzeugen, welche dann wiederum von einem Machine Learning Modell, ohne irgendwelche Vorgaben, also auch zum Teil auch zufällig, nach Ähnlichkeiten gruppiert werden. Das heißt der Computer ermittelt so gesehen seine eigene Zufälligkeit und wie man sehen wird, ist ein Computer gar nicht so zufällig.</p>
+            <h1 id="vorbereitung">Vorbereitung:</h1>
+            <ul>
+                <li>Das 3D Modellierungs und Render Programm Blender (V3)</li>
+                <li>Eine vorbereitete Szene in Blender</li>
+                <li>Passende Objekte, die in die Blender Szene durch ein Script importiert werden</li>
+            </ul>
+            <h1 id="ablauf">Ablauf:</h1>
+            <ol>
+                <li>Blender öffnet die Szene mit dem zugehörigen Zufallsskript</li>
+                <li>Das Zufallsskript importiert zufällig viele Objekte und verändert zufällig ihre Rotation und Position</li>
+                <li>Die Farbe der importierten Objekte wird zufällig geändert aus einem 16,8 mio. großem Farbpool</li>
+                <li>Die Szene wird mithilfe von der Renderingengine Cycles gerendert</li>
+                <li>Nach dem alle Bilder geladen sind, wird ein Machine Learning Modell aus deren Menge erstellt</li>
+                <li>Das ML-Modell sortiert die Bilder nach Ähnlichkeiten und packt passende zusammen in Gruppen</li>
+            </ol>
+        </div>
+    </div>
+    <div id="group-img"></div>
+    <script type="module">
+        fetch("images.json")
+            .then(response => response.json())
+            .then(json => {
+                let randomGroup = "group" + (Math.floor(Math.random() * 20));
+                let imgRand = Math.floor(Math.random() * json[randomGroup].length);
+                let randomImg = json[randomGroup][imgRand];
+
+                document.getElementById("main-text").innerHTML = randomImg + "<br>" + randomGroup;
+                document.getElementById("main-img").innerHTML = "<img id='randImg' src='" + randomGroup + "/" + randomImg + "'>"
+                let manyImages = "";
+                for (let i = 0; i < 10; i++) {
+                    manyImages += "<img class='manyImg' src='" + randomGroup + "/" + json[randomGroup][i] + "'>";
+                }
+                document.getElementById("group-img").innerHTML = manyImages;
+            })
+        setTimeout(() => {
+            location.reload();
+        }, 30000);
+    </script>
+</body>
+</html>
