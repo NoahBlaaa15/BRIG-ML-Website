@@ -14,7 +14,7 @@
     body{
         margin: 0;
         padding: 0;
-        background-color: #222325;
+        background-color: #1f1f1f;
         font-family: "Hubballi";
     }
     .main-img{
@@ -30,8 +30,8 @@
         vertical-align: middle;
     }
     #main-text{
+        margin-top: 0;
         color: white;
-        margin-left: 32px;
         vertical-align: middle;
     }
     #randImg{
@@ -47,7 +47,7 @@
         margin-left: 5vw;
     }
     .explain{
-        margin-left: 96px;
+        margin-left: 200px;
         color: white;
         max-width: 800px;
         max-height: 500px;
@@ -77,8 +77,8 @@
 <body>
     <div class="title">
         <div class="main-img" id="main-img"></div>
-        <h2 id="main-text"></h2>
         <div class="explain">
+            <h1 id="main-text"></h1>
             <h1 id="zusammenfassung">Überblick:</h1>
             <p>In meinem Projekt geht es um komplett zufällige Bildcollagen von 3D-Werkzeugen, welche dann wiederum von einem Machine Learning Modell, ohne irgendwelche Vorgaben, also auch zum Teil auch zufällig, nach Ähnlichkeiten gruppiert werden. Das heißt der Computer ermittelt so gesehen seine eigene Zufälligkeit und wie man sehen wird, ist ein Computer gar nicht so zufällig.</p>
             <h1 id="vorbereitung">Vorbereitung:</h1>
@@ -107,7 +107,7 @@
                 let imgRand = Math.floor(Math.random() * json[randomGroup].length);
                 let randomImg = json[randomGroup][imgRand];
 
-                document.getElementById("main-text").innerHTML = randomImg + "<br>" + randomGroup;
+                document.getElementById("main-text").innerHTML = randomImg + " / " + randomGroup;
                 document.getElementById("main-img").innerHTML = "<img id='randImg' src='" + randomGroup + "/" + randomImg + "'>"
                 let manyImages = "";
                 for (let i = 0; i < 10; i++) {
